@@ -8,9 +8,14 @@
         }
     ],
     "type": "craft-plugin",
+    "repositories": [                                                                                                                                                                
+        {                                                                                                                                                                            
+            "url": "https://github.com/florianbeer/Instagram-PHP-API.git",                                                                                                           
+            "type": "git"                                                                                                                                                            
+        }                                                                                                                                                                            
+    ],
     "require": {
-        "facebook/php-sdk-v4" : "~5.0",
-        "cosenary/instagram": "dev-master"
-
+        "cosenary/instagram": "dev-master",
+        "facebook/php-sdk-v4" : "~5.0"
     }
 }
