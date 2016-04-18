@@ -1,0 +1,86 @@
+{% extends "_layouts/cp" %}
+{% import '_includes/forms' as forms %}
+
+{% set fullPageForm = true %}
+
+{% set title = "Social Feed - Instagram Settings"|t %}
+
+{% set selectedTab = 'instagram' %}
+
+{% set content %}
+
+    {% if craft.app.version < 2.5 %}
+        <form id="site-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+    {% endif %}
+
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="socialFeed/instagram/saveInstagramSettings" />
+
+        {{ forms.textField({
+            first:        true,
+            label:        "Instagram Userame"|t,
+            required:     true,
+            id:           'instagramUsername',
+            instructions: "Enter your Instagram username."|t,
+            autofocus:    true,
+            name: 'instagramUsername',
+            value: settings.instagramUsername
+        }) }}
+
+        {{ forms.textField({
+            first:        true,
+            label:        "Instagram User ID"|t,
+            required:     true,
+            id:           'instagramUserId',
+            instructions: "Enter your Instagram user id. http://jelled.com/instagram/lookup-user-id"|t,
+            autofocus:    true,
+            name: 'instagramUserId',
+            value: settings.instagramUserId
+        }) }}
+
+        {{ forms.textField({
+            first:        true,
+            label:        "Instagram Client ID"|t,
+            required:     true,
+            id:           'instagramClientId',
+            instructions: "Enter your instagram Client ID."|t,
+            name: 'instagramClientId',
+            value: settings.instagramClientId
+        }) }}
+
+        {{ forms.textField({
+            first:        true,
+            label:        "Instagram Access Token"|t,
+            required:     true,
+            id:           'instagramAccessToken',
+            instructions: "Enter your instagram Access Token. http://jelled.com/instagram/access-token"|t,
+            name: 'instagramAccessToken',
+            value: settings.instagramAccessToken
+        }) }}
+
+        {{ forms.textField({
+            first:        true,
+            label:        "instagram Feed Limit"|t,
+            required:     false,
+            id:           'instagramFeedLimit',
+            instructions: "How many photos to display."|t,
+            name: 'instagramFeedLimit',
+            value: settings.instagramFeedLimit
+        }) }}
+
+        <!-- Needed for for Craft < 2.5 -->
+        {% if craft.app.version < 2.5 %}
+            <div class="item" data-position="left" data-colspan="1">
+                <div class="buttons">
+                    <div class="btngroup submit first">
+                        <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    {% if craft.app.version < 2.5 %}
+        </form>
+    {% endif %}
+
+{% endset %}

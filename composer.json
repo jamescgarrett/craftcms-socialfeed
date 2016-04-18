@@ -1,0 +1,16 @@
+{
+    "name": "xodigital/formerly",
+    "description": "Craft Plugin that allows users to build their own forms and view form submissions",
+    "authors": [
+        {
+            "name": "XO Digital",
+            "email": "hello@xodigital.com.au"
+        }
+    ],
+    "type": "craft-plugin",
+    "require": {
+        "facebook/php-sdk-v4" : "~5.0",
+        "cosenary/instagram": "dev-master"
+
+    }
+}

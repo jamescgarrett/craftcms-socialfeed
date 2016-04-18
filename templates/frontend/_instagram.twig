@@ -1,0 +1,8 @@
+<div class="socialFeeds-instagram-container">
+    {% for item in instagramFeed %}
+		<a href="https://www.instagram.com/{{settings.instagramUsername}}"><img src="{{item.image}}" alt="{{'Fatback Bikes' |t}}" /></a>
+        {% if item.caption |length %}
+        	{{item.caption}}
+        {% endif %}
+   {% endfor %}
+</div>

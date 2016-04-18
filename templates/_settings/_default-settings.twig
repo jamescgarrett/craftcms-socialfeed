@@ -1,0 +1,68 @@
+{% extends "_layouts/cp" %}
+{% import '_includes/forms' as forms %}
+
+{% set fullPageForm = true %}
+
+{% set title = "Social Feed"|t %}
+
+{% set selectedTab = 'socialfeed' %}
+
+{% set content %}
+  
+    {% if craft.app.version < 2.5 %}
+        <form id="site-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
+    {% endif %}
+
+        {{ getCsrfInput() }}
+        <input type="hidden" name="action" value="socialFeed/default/saveDefaultSettings" />
+
+        <div class="field">
+            <div class="heading">
+                <label for="facebookActive">{{'Use Facebook' |t}}</label>
+                <div class="instructions">
+                    <p>{{'Add Facebook feed capability.'|t}}</p>
+                </div>
+            </div>
+            {{ forms.lightSwitch({
+                label:        "Facebook"|t,
+                required:     false,
+                id:           'facebookActive',
+                instructions: "Feed from Facebook."|t,
+                name: 'facebookActive',
+                on: (settings.facebookActive is defined) ? settings.facebookActive : ""
+            }) }}
+        </div>
+
+        <div class="field">
+            <div class="heading">
+                <label for="instagramActive">{{'Use Instagram' |t}}</label>
+                <div class="instructions">
+                    <p>{{'Add Instagram feed capability.'|t}}</p>
+                </div>
+            </div>
+            {{ forms.lightSwitch({
+                label:        "instagram"|t,
+                required:     false,
+                id:           'instagramActive',
+                instructions: "Feed from instagram."|t,
+                name: 'instagramActive',
+                on: (settings.instagramActive is defined) ? settings.instagramActive : ""
+            }) }}
+        </div>
+
+        <!-- Needed for for Craft < 2.5 -->
+        {% if craft.app.version < 2.5 %}
+            <div class="item" data-position="left" data-colspan="1">
+                <div class="buttons">
+                    <div class="btngroup submit first">
+                        <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
+    {% if craft.app.version < 2.5 %}
+        </form>
+    {% endif %}
+
+{% endset %}

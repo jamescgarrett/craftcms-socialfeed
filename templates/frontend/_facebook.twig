@@ -1,0 +1,10 @@
+<div class="socialFeeds-facebook-container">
+    {% for item in facebookFeed %}
+        {% if item.imageSrc |length %}
+            <img src="{{item.imageSrc}}" alt="{{'Fatback Bikes' |t}}" />
+            {{'Posted on:' |t}} {{ item.date }}{{item.time}}
+            {{item.message}}
+            <a href="https://www.facebook.com/{{settings.facebookPageName}}/posts/{{item.postId}}" target="_blank">{{'View' |t}}</a>
+        {% endif %}
+   {% endfor %}
+</div>
