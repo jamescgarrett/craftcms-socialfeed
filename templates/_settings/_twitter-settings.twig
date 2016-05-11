@@ -1,0 +1,57 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    first:        true,
+    label:        "Twitter Userame"|t,
+    required:     false,
+    id:           'twitterUsername',
+    instructions: "Enter your Twitter username."|t,
+    autofocus:    true,
+    name: 'twitterUsername',
+    value: settings.twitterUsername,
+}) }}
+
+{{ forms.textField({
+    label:        "Consumer Key"|t,
+    required:     false,
+    id:           'twitterConsumerKey',
+    instructions: "Enter your Twitter consumer key"|t,
+    name: 'twitterConsumerKey',
+    value: settings.twitterConsumerKey,
+}) }}
+
+{{ forms.textField({
+    label:        "Consumer Secret"|t,
+    required:     false,
+    id:           'twitterConsumerSecret',
+    instructions: "Enter your twitter consumer secret."|t,
+    name: 'twitterConsumerSecret',
+    value: settings.twitterConsumerSecret,
+}) }}
+
+{{ forms.textField({
+    label:        "Access Token"|t,
+    required:     false,
+    id:           'twitterAccessToken',
+    instructions: "Enter your twitter Access Token."|t,
+    name: 'twitterAccessToken',
+    value: settings.twitterAccessToken,
+}) }}
+
+{{ forms.textField({
+    label:        "Token Secret"|t,
+    required:     false,
+    id:           'twitterTokenSecret',
+    instructions: "Enter your twitter Access Token Secret."|t,
+    name: 'twitterTokenSecret',
+    value: settings.twitterTokenSecret,
+}) }}
+
+{{ forms.textField({
+    label:        "Twitter Feed Limit"|t,
+    required:     false,
+    id:           'twitterFeedLimit',
+    instructions: "How many tweets to display."|t,
+    name: 'twitterFeedLimit',
+    value: settings.twitterFeedLimit,
+}) }}

@@ -12,4 +12,9 @@ class SocialFeedVariable
     {
         return craft()->socialFeed_instagram->displayInstagramFeed();
     }
+
+    public function displayTwitterFeed()
+    {
+        return craft()->socialFeed_twitter->displayTwitterFeed();
+    }
 }

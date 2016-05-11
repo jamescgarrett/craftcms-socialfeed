@@ -31,9 +31,7 @@ class SocialFeedPlugin extends BasePlugin
     public function registerCpRoutes()
     {
         return array(
-            'socialfeed/default' => array('action' => 'socialFeed/default/index'),
-            'socialfeed/facebook' => array('action' => 'socialFeed/facebook/index'),
-            'socialfeed/instagram' => array('action' => 'socialFeed/instagram/index'),
+            'socialfeed/settings' => array('action' => 'socialFeed/index')
         );
     }
 }

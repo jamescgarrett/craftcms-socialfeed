@@ -1,68 +1,91 @@
 {% extends "_layouts/cp" %}
-{% import '_includes/forms' as forms %}
+
+{% import "_includes/forms" as forms %}
 
 {% set fullPageForm = true %}
 
 {% set title = "Social Feed"|t %}
 
-{% set selectedTab = 'socialfeed' %}
+{% set tabs = {
+    feeds: { label: "Feeds"|t, url: '#feeds' },
+    facebookFields: { label: "Facebook"|t, url: '#facebook-fields', class: (not settings.facebookActive ? 'hidden') },
+    instagramFields: { label: "Instagram"|t, url: '#instagram-fields', class: (not settings.instagramActive ? 'hidden') },
+    twitterFields: { label: "Twitter"|t, url: '#twitter-fields', class: (not settings.twitterActive ? 'hidden') }
+} %}
+{% set selectedTab = 'feeds' %}
 
-{% set content %}
-  
-    {% if craft.app.version < 2.5 %}
-        <form id="site-form" method="post" accept-charset="UTF-8" data-saveshortcut="1" data-saveshortcut-redirect="{{ continueEditingUrl }}">
-    {% endif %}
+{% block content %}
+    <input type="hidden" name="action" value="socialFeed/saveSettings" />
 
-        {{ getCsrfInput() }}
-        <input type="hidden" name="action" value="socialFeed/default/saveDefaultSettings" />
+    <div id="feeds">
+        {{ forms.checkboxField({
+            label: "Use Facebook"|t,
+            instructions: "Add Facebook feed capability.",
+            id: 'facebookActive',
+            name: 'facebookActive',
+            checked: settings.facebookActive,
+            toggle: '#facebook-settings',
+        }) }}
 
-        <div class="field">
-            <div class="heading">
-                <label for="facebookActive">{{'Use Facebook' |t}}</label>
-                <div class="instructions">
-                    <p>{{'Add Facebook feed capability.'|t}}</p>
-                </div>
-            </div>
-            {{ forms.lightSwitch({
-                label:        "Facebook"|t,
-                required:     false,
-                id:           'facebookActive',
-                instructions: "Feed from Facebook."|t,
-                name: 'facebookActive',
-                on: (settings.facebookActive is defined) ? settings.facebookActive : ""
-            }) }}
-        </div>
+        {{ forms.checkboxField({
+            label: "Use Instagram"|t,
+            instructions: "Add Instagram feed capability.",
+            id: 'instagramActive',
+            name: 'instagramActive',
+            checked: settings.instagramActive,
+            toggle: '#instagram-settings',
+        }) }}
 
-        <div class="field">
-            <div class="heading">
-                <label for="instagramActive">{{'Use Instagram' |t}}</label>
-                <div class="instructions">
-                    <p>{{'Add Instagram feed capability.'|t}}</p>
-                </div>
-            </div>
-            {{ forms.lightSwitch({
-                label:        "instagram"|t,
-                required:     false,
-                id:           'instagramActive',
-                instructions: "Feed from instagram."|t,
-                name: 'instagramActive',
-                on: (settings.instagramActive is defined) ? settings.instagramActive : ""
-            }) }}
-        </div>
+        {{ forms.checkboxField({
+            label: "Use Twitter"|t,
+            instructions: "Add Twitter feed capability.",
+            id: 'twitterActive',
+            name: 'twitterActive',
+            checked: settings.twitterActive,
+            toggle: '#twitter-settings',
+        }) }}
+    </div>
 
-        <!-- Needed for for Craft < 2.5 -->
-        {% if craft.app.version < 2.5 %}
-            <div class="item" data-position="left" data-colspan="1">
-                <div class="buttons">
-                    <div class="btngroup submit first">
-                        <input type="submit" class="btn submit" value="{{ 'Save'|t }}">
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+    <div id="facebook-fields" class="hidden">
+        {% include "socialfeed/_settings/_facebook-settings" with {
+            settings: settings,
+        } only %}
+    </div>
 
-    {% if craft.app.version < 2.5 %}
-        </form>
-    {% endif %}
+    <div id="instagram-fields" class="hidden">
+        {% include "socialfeed/_settings/_instagram-settings" with {
+            settings: settings,
+        } only %}
+    </div>
 
-{% endset %}
+    <div id="twitter-fields" class="hidden">
+        {% include "socialfeed/_settings/_twitter-settings" with {
+            settings: settings,
+        } only %}
+    </div>
+
+{% endblock %}
+
+{% includejs %}
+    $('#facebookActive').on('change', function() {
+        if ($(this).prop('checked')) {
+            $('#tab-facebookFields').removeClass('hidden');
+        } else {
+            $('#tab-facebookFields').addClass('hidden');
+        }
+    });
+    $('#instagramActive').on('change', function() {
+        if ($(this).prop('checked')) {
+            $('#tab-instagramFields').removeClass('hidden');
+        } else {
+            $('#tab-instagramFields').addClass('hidden');
+        }
+    });
+    $('#twitterActive').on('change', function() {
+        if ($(this).prop('checked')) {
+            $('#tab-twitterFields').removeClass('hidden');
+        } else {
+            $('#tab-twitterFields').addClass('hidden');
+        }
+    });
+{% endincludejs %}

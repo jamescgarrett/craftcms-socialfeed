@@ -1,10 +1,10 @@
 {
-    "name": "xodigital/formerly",
-    "description": "Craft Plugin that allows users to build their own forms and view form submissions",
+    "name": "jamescgarrett/socialfeed",
+    "description": "Craft Plugin that allows users to feed social networks",
     "authors": [
         {
-            "name": "XO Digital",
-            "email": "hello@xodigital.com.au"
+            "name": "James C Garrett",
+            "email": "jamescgarrett@gmail.com"
         }
     ],
     "type": "craft-plugin",
@@ -16,6 +16,7 @@
     ],
     "require": {
         "cosenary/instagram": "dev-master",
-        "facebook/php-sdk-v4" : "~5.0"
+        "facebook/php-sdk-v4" : "~5.0",
+        "abraham/twitteroauth": "~0.6.4"
     }
 }

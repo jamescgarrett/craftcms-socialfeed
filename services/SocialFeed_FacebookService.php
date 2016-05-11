@@ -9,87 +9,10 @@ if (!class_exists('Facebook'))
 class SocialFeed_FacebookService extends BaseApplicationComponent
 {
 
-    public function getFacebookSettingsByAttr()
-    {
-        $record = SocialFeed_FacebookRecord::model()->findByAttributes(array("settingsId" => "facebookSettings"));
-
-        if ($record) {
-            $model =  SocialFeed_FacebookModel::populateModel($record);
-        } else {
-            $record = new SocialFeed_FacebookRecord();
-            $model =  SocialFeed_FacebookModel::populateModel($record);
-        }
-
-        return $model;
-    }
-
-    public function getFacebookSettings()
-    {
-        $model = $this->getFacebookSettingsByAttr();
-
-        if (!$model)
-        {
-            return false;
-        } else {
-            $result = $model->attributes;
-
-            if ($result)
-            {
-                unset($result['id']);
-                unset($result['dateCreated']);
-                unset($result['dateUpdated']);
-                unset($result['uid']);
-            }
-
-            return $result;
-        }
-    }
-
-    public function saveFacebookSettings(SocialFeed_FacebookModel $model)
-    {
-
-        if (!$model)
-        {
-            return false;
-        }
-
-        $record = SocialFeed_FacebookRecord::model()->findByAttributes(array("settingsId" => "facebookSettings"));
-        if (!$record)
-        {
-            $record = new SocialFeed_FacebookRecord();
-        }
-
-        $record->setAttributes($model->getAttributes(), false);
-
-        try
-        {
-            $record->validate();
-            $model->addErrors($record->getErrors());
-
-            if (!$model->hasErrors())
-            {
-                $record->save(false);
-
-                $model->setAttribute('id', $record->getAttribute('id'));
-
-                return true;
-            } 
-            else 
-            {
-                return false;
-            }
-        }
-        catch (\Exception $ex)
-        {
-
-            throw $ex;
-        }
-    }
-
     public function getFacebookFeed()
     {
 
-        $settings = $this->getFacebookSettings();
+        $settings = craft()->socialFeed->getSettings();
 
         $fb = new \Facebook\Facebook([
             'app_id' => $settings['facebookAppId'],
@@ -165,7 +88,7 @@ class SocialFeed_FacebookService extends BaseApplicationComponent
 
                 craft()->path->setTemplatesPath($pluginPath);
 
-                $html = craft()->templates->render('frontend/_facebook', [ 'facebookFeed' => $this->getFacebookFeed(), 'settings' => $this->getFacebookSettings()]);
+                $html = craft()->templates->render('frontend/_facebook', [ 'facebookFeed' => $this->getFacebookFeed(), 'settings' => craft()->socialFeed->getSettings()]);
 
                 // Reset Template Path
                 craft()->path->setTemplatesPath($sitePath);
