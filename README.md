@@ -8,7 +8,6 @@ A CraftCMS plugin which allows you to feed social networks data.
 
 ## To Do:
 - Catch Errors on settings forms
-- Add an optional javascript front end/view
 
 ## License
 MIT License - Created by [jamescgarrett](https://github.com/jamescgarrett/craftcms-socialfeed)

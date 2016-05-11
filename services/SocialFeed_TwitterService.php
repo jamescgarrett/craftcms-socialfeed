@@ -21,7 +21,7 @@ class SocialFeed_TwitterService extends BaseApplicationComponent
         $tweets = $connection->get("statuses/user_timeline", ["screen_name" => $settings['twitterUsername'], "count" => $settings['twitterFeedLimit']]);
         $results = array();
         foreach ($tweets as $tweet) 
-        {
+        {   
             $text = $this->pregUrls($tweet->text);
             $date = $tweet->created_at;
             array_push($results, array(
@@ -34,29 +34,34 @@ class SocialFeed_TwitterService extends BaseApplicationComponent
 
     public function displayTwitterFeed()
     {
+        $settings = craft()->socialFeed->getSettings();
 
-        foreach (craft()->config->get('defaultTemplateExtensions') as $extension) 
-        {
-            if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'socialFeedPlugin/_twitter' . "." . $extension) ) 
-            {
-                $html = craft()->templates->render('socialFeedPlugin/_twitter');
-            }
-            else
-            {
-                $sitePath = craft()->path->getTemplatesPath();
-                $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
-
-                craft()->path->setTemplatesPath($pluginPath);
-
-                $html = craft()->templates->render('frontend/_twitter', [ 'twitterFeed' => $this->getTwitterFeed(), 'settings' => craft()->socialFeed->getSettings()]);
-
-                // Reset Template Path
-                craft()->path->setTemplatesPath($sitePath);
-            }
-        }
+        $file = '_twitter';
         
-        return TemplateHelper::getRaw($html);
+        if ($settings['useJavascript'])
+        {
+            craft()->socialFeed->getScripts();
+            $file = '_js_twitter';
+        }
 
+        if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
+        {
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'twitterFeed' => $this->getTwitterFeed()]);
+        }
+        else
+        {
+            $sitePath = craft()->path->getTemplatesPath();
+            $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
+
+            craft()->path->setTemplatesPath($pluginPath);
+
+            $html = craft()->templates->render('frontend/' . $file . '', [ 'twitterFeed' => $this->getTwitterFeed()]);
+
+            // Reset Template Path
+            craft()->path->setTemplatesPath($sitePath);
+        }
+
+        return TemplateHelper::getRaw($html);
     }
 
     private function pregUrls($text)

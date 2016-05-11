@@ -1,0 +1,11 @@
+<div class="socialFeeds-twitter-container">
+	<div class="socialFeeds-loading"></div>
+</div>
+{% verbatim %}
+	<script type="text/x-handlebars-template" id="socialFeeds-twitter">
+		{{#each feed}}
+    		<p>{{this.date}}</p>
+			<p>{{{this.text}}}</p>
+		{{/each}}
+	</script>
+{% endverbatim %}

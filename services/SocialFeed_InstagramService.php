@@ -45,28 +45,33 @@ class SocialFeed_InstagramService extends BaseApplicationComponent
 
     public function displayInstagramFeed()
     {
+        $settings = craft()->socialFeed->getSettings();
 
-        foreach (craft()->config->get('defaultTemplateExtensions') as $extension) 
-        {
-            if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'socialFeedPlugin/_instagram' . "." . $extension) ) 
-            {
-                $html = craft()->templates->render('socialFeedPlugin/_instagram');
-            }
-            else
-            {
-                $sitePath = craft()->path->getTemplatesPath();
-                $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
-
-                craft()->path->setTemplatesPath($pluginPath);
-
-                $html = craft()->templates->render('frontend/_instagram', [ 'instagramFeed' => $this->getInstagramFeed(), 'settings' => craft()->socialFeed->getSettings()]);
-
-                // Reset Template Path
-                craft()->path->setTemplatesPath($sitePath);
-            }
-        }
+        $file = '_instagram';
         
-        return TemplateHelper::getRaw($html);
+        if ($settings['useJavascript'])
+        {
+            craft()->socialFeed->getScripts();
+            $file = '_js_instagram';
+        }
 
+        if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
+        {
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'instagramFeed' => $this->getInstagramFeed()]);
+        }
+        else
+        {
+            $sitePath = craft()->path->getTemplatesPath();
+            $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
+
+            craft()->path->setTemplatesPath($pluginPath);
+
+            $html = craft()->templates->render('frontend/' . $file . '', [ 'instagramFeed' => $this->getInstagramFeed()]);
+
+            // Reset Template Path
+            craft()->path->setTemplatesPath($sitePath);
+        }
+
+        return TemplateHelper::getRaw($html);
     }
 }

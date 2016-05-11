@@ -93,4 +93,39 @@ class SocialFeedService extends BaseApplicationComponent
             throw $ex;
         }
     }
+
+    public function getScripts()
+    {
+        if ( $this->isSecureSite() )
+        {
+            $protocol = 'https://';
+        }
+        else 
+        {
+            $protocol = 'http://';
+        }
+
+        $settings =  $this->getSettings();
+
+        craft()->templates->includeJsFile(UrlHelper::getResourceUrl('socialfeed/src/js/socialfeed.js'));
+
+        if (!$settings['useYourOwnJavascriptFile'])
+        {
+            $this->addSocialFeedJavascript($settings);
+        }
+    }
+
+    public function addSocialFeedJavascript($settings)
+    {
+        craft()->templates->includeJs('document.addEventListener("DOMContentLoaded",function(){const socialfeed = new SocialFeed({
+            facebook: "' . $settings['facebookActive'] . '",
+            instagram: "' . $settings['instagramActive'] . '",
+            twitter: "' . $settings['twitterActive'] . '"
+        });});');
+    }
+
+    public function isSecureSite()
+    {
+      return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') || $_SERVER['SERVER_PORT'] == 443;
+    }
 }

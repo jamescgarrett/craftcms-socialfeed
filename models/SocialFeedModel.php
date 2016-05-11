@@ -7,6 +7,8 @@ class SocialFeedModel extends BaseModel
     {
         return array(
             'settingsId'            => AttributeType::String,
+            'useJavascript'         => AttributeType::Bool,
+            'useYourOwnJavascriptFile' => AttributeType::Bool,
             'facebookActive'        => AttributeType::Bool,
             'instagramActive'       => AttributeType::Bool,
             'twitterActive'         => AttributeType::Bool,

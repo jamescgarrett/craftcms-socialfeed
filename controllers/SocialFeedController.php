@@ -18,6 +18,9 @@ class SocialFeedController extends BaseController
         $model = craft()->socialFeed->getSettingsByAttr();
 
         $model->settingsId = "socialfeedsettings";
+        $model->useJavascript = craft()->request->getPost('useJavascript');
+        $model->useYourOwnJavascriptFile = craft()->request->getPost('useYourOwnJavascriptFile');
+
         $model->facebookActive = craft()->request->getPost('facebookActive');
         $model->instagramActive = craft()->request->getPost('instagramActive');
         $model->twitterActive = craft()->request->getPost('twitterActive');

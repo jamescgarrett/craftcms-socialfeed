@@ -34,4 +34,13 @@ class SocialFeedPlugin extends BasePlugin
             'socialfeed/settings' => array('action' => 'socialFeed/index')
         );
     }
+
+    public function registerSiteRoutes()
+    {
+        return array(
+            'api/craft/socialfeedplugin/facebook' => array('action' => 'socialFeed/api/facebook'),
+            'api/craft/socialfeedplugin/instagram' => array('action' => 'socialFeed/api/instagram'),
+            'api/craft/socialfeedplugin/twitter' => array('action' => 'socialFeed/api/twitter')
+        );
+    }
 }

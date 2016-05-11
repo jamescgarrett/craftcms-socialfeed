@@ -19,7 +19,7 @@
 
     <div id="feeds">
         {{ forms.checkboxField({
-            label: "Use Facebook"|t,
+            label: "<strong>Use Facebook</strong>"|t,
             instructions: "Add Facebook feed capability.",
             id: 'facebookActive',
             name: 'facebookActive',
@@ -28,7 +28,7 @@
         }) }}
 
         {{ forms.checkboxField({
-            label: "Use Instagram"|t,
+            label: "<strong>Use Instagram</strong>"|t,
             instructions: "Add Instagram feed capability.",
             id: 'instagramActive',
             name: 'instagramActive',
@@ -37,13 +37,45 @@
         }) }}
 
         {{ forms.checkboxField({
-            label: "Use Twitter"|t,
+            label: "<strong>Use Twitter</strong>"|t,
             instructions: "Add Twitter feed capability.",
             id: 'twitterActive',
             name: 'twitterActive',
             checked: settings.twitterActive,
             toggle: '#twitter-settings',
         }) }}
+
+        <div class="field">
+            <div class="heading">
+                <label for="useJavascript">{{'Use Javascript'|t}}</label>
+                <div class="instructions">
+                    <p>{{'Use javascript to load data on the front end.'|t}}</p>
+                </div>
+            </div>
+            {{ forms.lightSwitch({
+                label:        "useJavascript"|t,
+                required:     false,
+                id:           'useJavascript',
+                name: 'useJavascript',
+                on: (settings.useJavascript is defined) ? settings.useJavascript : ""
+            }) }}
+        </div>
+
+        <div class="field">
+            <div class="heading">
+                <label for="useYourOwnJavascriptFile">{{'Use Your Own Javascript'|t}}</label>
+                <div class="instructions">
+                    <p>{{'Use your own javascript file to init the social feed script.'|t}}</p>
+                </div>
+            </div>
+            {{ forms.lightSwitch({
+                label:        "useYourOwnJavascriptFile"|t,
+                required:     false,
+                id:           'useYourOwnJavascriptFile',
+                name: 'useYourOwnJavascriptFile',
+                on: (settings.useYourOwnJavascriptFile is defined) ? settings.useYourOwnJavascriptFile : ""
+            }) }}
+        </div>
     </div>
 
     <div id="facebook-fields" class="hidden">

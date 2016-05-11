@@ -74,28 +74,33 @@ class SocialFeed_FacebookService extends BaseApplicationComponent
 
     public function displayFacebookFeed()
     {
+        $settings = craft()->socialFeed->getSettings();
 
-        foreach (craft()->config->get('defaultTemplateExtensions') as $extension) 
+        $file = '_facebook';
+        
+        if ($settings['useJavascript'])
         {
-            if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'socialFeedPlugin/_facebook' . "." . $extension) ) 
-            {
-                $html = craft()->templates->render('socialFeedPlugin/_facebook');
-            }
-            else
-            {
-                $sitePath = craft()->path->getTemplatesPath();
-                $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
-
-                craft()->path->setTemplatesPath($pluginPath);
-
-                $html = craft()->templates->render('frontend/_facebook', [ 'facebookFeed' => $this->getFacebookFeed(), 'settings' => craft()->socialFeed->getSettings()]);
-
-                // Reset Template Path
-                craft()->path->setTemplatesPath($sitePath);
-            }
+            craft()->socialFeed->getScripts();
+            $file = '_js_facebook';
         }
 
-    
+        if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
+        {
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'facebookFeed' => $this->getFacebookFeed()]);
+        }
+        else
+        {
+            $sitePath = craft()->path->getTemplatesPath();
+            $pluginPath = craft()->path->getPluginsPath() . 'socialfeed/templates';
+
+            craft()->path->setTemplatesPath($pluginPath);
+
+            $html = craft()->templates->render('frontend/' . $file . '', [ 'facebookFeed' => $this->getFacebookFeed()]);
+
+            // Reset Template Path
+            craft()->path->setTemplatesPath($sitePath);
+        }
+
         return TemplateHelper::getRaw($html);
     }
 }
