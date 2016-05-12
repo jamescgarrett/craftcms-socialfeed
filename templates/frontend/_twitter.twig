@@ -1,8 +1,6 @@
 <div class="socialFeeds-twitter-container">
     {% for item in twitterFeed %}
-        
         {{item.date|date("F j, Y - h:i A")}}<br />
         {{item.text|raw}}
-        
     {% endfor %}
 </div>

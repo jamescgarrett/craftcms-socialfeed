@@ -51,6 +51,46 @@ class SocialFeedService extends BaseApplicationComponent
         }
     }
 
+    public function getPublicSettings()
+    {
+        $model = $this->getSettingsByAttr();
+
+        if (!$model)
+        {
+            return false;
+        } else {
+            $result = $model->attributes;
+
+            if ($result)
+            {
+                unset($result['id']);
+                unset($result['dateCreated']);
+                unset($result['dateUpdated']);
+                unset($result['uid']);
+                
+                // Hide secret stuff
+                unset($result['settingsId']);
+                unset($result['facebookActive']);
+                unset($result['instagramActive']);
+                unset($result['twitterActive']);
+                unset($result['facebookAppId']);
+                unset($result['facebookAppSecret']);
+                unset($result['facebookFeedLimit']);
+                unset($result['instagramUserId']);
+                unset($result['instagramClientId']);
+                unset($result['instagramAccessToken']);
+                unset($result['instagramFeedLimit']);
+                unset($result['twitterConsumerKey']);
+                unset($result['twitterConsumerSecret']);
+                unset($result['twitterAccessToken']);
+                unset($result['twitterTokenSecret']);
+                unset($result['twitterFeedLimit']);
+            }
+
+            return $result;
+        }
+    }
+
     public function saveSettings(SocialFeedModel $model)
     {
 
@@ -117,7 +157,7 @@ class SocialFeedService extends BaseApplicationComponent
 
     public function addSocialFeedJavascript($settings)
     {
-        craft()->templates->includeJs('document.addEventListener("DOMContentLoaded",function(){const socialfeed = new SocialFeed({
+        craft()->templates->includeJs('document.addEventListener("DOMContentLoaded",function(){new SocialFeed({
             facebook: "' . $settings['facebookActive'] . '",
             instagram: "' . $settings['instagramActive'] . '",
             twitter: "' . $settings['twitterActive'] . '"

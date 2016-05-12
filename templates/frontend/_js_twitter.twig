@@ -2,10 +2,10 @@
 	<div class="socialFeeds-loading"></div>
 </div>
 {% verbatim %}
-	<script type="text/x-handlebars-template" id="socialFeeds-twitter">
-		{{#each feed}}
-    		<p>{{this.date}}</p>
-			<p>{{{this.text}}}</p>
-		{{/each}}
+	<script type="x-tmpl-mustache" id="socialFeeds-twitter">
+		{{#feed}}
+    		<p>{{date}}</p>
+			<p>{{{text}}}</p>
+		{{/feed}}
 	</script>
 {% endverbatim %}

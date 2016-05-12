@@ -30,7 +30,7 @@ class SocialFeed_InstagramService extends BaseApplicationComponent
                 break;
             } 
 
-            $image = $media->images->low_resolution->url;
+            $image = $media->images->standard_resolution->url;
 
             $caption = (!empty($media->caption->text)) ? $media->caption->text : '';
 
@@ -45,19 +45,21 @@ class SocialFeed_InstagramService extends BaseApplicationComponent
 
     public function displayInstagramFeed()
     {
-        $settings = craft()->socialFeed->getSettings();
+        $settings = craft()->socialFeed->getPublicSettings();
 
         $file = '_instagram';
+        $data = ['instagramFeed' => $this->getInstagramFeed(), 'settings' => $settings];
         
         if ($settings['useJavascript'])
         {
             craft()->socialFeed->getScripts();
             $file = '_js_instagram';
+            $data = [];
         }
 
         if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
         {
-            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'instagramFeed' => $this->getInstagramFeed()]);
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', $data);
         }
         else
         {
@@ -66,7 +68,7 @@ class SocialFeed_InstagramService extends BaseApplicationComponent
 
             craft()->path->setTemplatesPath($pluginPath);
 
-            $html = craft()->templates->render('frontend/' . $file . '', [ 'instagramFeed' => $this->getInstagramFeed()]);
+            $html = craft()->templates->render('frontend/' . $file . '', $data);
 
             // Reset Template Path
             craft()->path->setTemplatesPath($sitePath);

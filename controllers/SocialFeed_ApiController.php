@@ -9,6 +9,7 @@ class SocialFeed_ApiController extends BaseController
     public function actionFacebook()
     {
         $variables['feed'] = craft()->socialFeed_facebook->getFacebookFeed();
+        $variables['settings'] = craft()->socialFeed->getPublicSettings();
 
         // Get Templates Paths
         $sitePath = craft()->path->getTemplatesPath();
@@ -26,6 +27,7 @@ class SocialFeed_ApiController extends BaseController
     public function actionInstagram()
     {
         $variables['feed'] = craft()->socialFeed_instagram->getInstagramFeed();
+        $variables['settings'] = craft()->socialFeed->getPublicSettings();
 
         // Get Templates Paths
         $sitePath = craft()->path->getTemplatesPath();
@@ -43,6 +45,7 @@ class SocialFeed_ApiController extends BaseController
     public function actionTwitter()
     {
         $variables['feed'] = craft()->socialFeed_twitter->getTwitterFeed();
+        $variables['settings'] = craft()->socialFeed->getPublicSettings();
 
         // Get Templates Paths
         $sitePath = craft()->path->getTemplatesPath();

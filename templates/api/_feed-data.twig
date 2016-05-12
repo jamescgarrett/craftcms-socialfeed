@@ -1,2 +1,2 @@
 {% header "Content-Type: application/json" %}
-{% if feed|length %}{"feed": {{ feed|json_encode|raw }}}{% else %}{"feed": {{ "No data"|raw }}}{% endif %}
+{% if feed|length %}{"feed": {{ feed|json_encode|raw }},"settings": {{ settings|json_encode|raw }}}{% else %}{"feed": {{ "No data"|raw }}}{% endif %}

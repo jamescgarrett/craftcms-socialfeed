@@ -2,10 +2,29 @@
 	<div class="socialFeeds-loading"></div>
 </div>
 {% verbatim %}
-	<script type="text/x-handlebars-template" id="socialFeeds-facebook">
-		{{#each feed}}
-    		<p>{{this.date}}</p>
-			<p>{{{this.text}}}</p>
-		{{/each}}
+	<script type="x-tmpl-mustache" id="socialFeeds-facebook">
+		{{#feed}}
+    		{{#imageSrc}}
+    			<div class="socialFeeds-facebook-post u-flexbox">
+	                <div class="socialFeeds-facebook-post-image">
+	                    <img src="{{imageSrc}}" alt="Fatback Bikes" />
+	                </div>
+	                <div class="socialFeeds-facebook-text socialFeeds-facebook-text--image">
+	                    <p class="socialFeeds-facebook-date">Posted on: {{ date }}{{time}}</p>
+	                    <p class="socialFeeds-facebook-message">{{{message}}}</p>
+	                    <p><a href="https://www.facebook.com/{{#settings}}{{facebookPageName}}{{/settings}}/posts/{{postId}}" target="_blank">View Post</a></p>
+	                </div>
+	            </div>
+    		{{/imageSrc}}
+    		{{^imageSrc}}
+    			<div class="socialFeeds-facebook-post">
+	                <div class="socialFeeds-facebook-text">
+	                    <p class="socialFeeds-facebook-date">Posted on: {{date }}{{time}}</p>
+	                    <p class="socialFeeds-facebook-message">{{{message}}}</p>
+	                    <p><a href="https://www.facebook.com/{{#settings}}{{facebookPageName}}{{/settings}}/posts/{{postId}}" target="_blank">View Post</a></p>
+	                </div>
+	            </div>
+  			{{/imageSrc}}
+		{{/feed}}
 	</script>
 {% endverbatim %}

@@ -34,19 +34,21 @@ class SocialFeed_TwitterService extends BaseApplicationComponent
 
     public function displayTwitterFeed()
     {
-        $settings = craft()->socialFeed->getSettings();
+        $settings = craft()->socialFeed->getPublicSettings();
 
         $file = '_twitter';
+        $data = ['twitterFeed' => $this->getTwitterFeed(), 'settings' => $settings];
         
         if ($settings['useJavascript'])
         {
             craft()->socialFeed->getScripts();
             $file = '_js_twitter';
+            $data = [];
         }
-
+        craft()->socialFeed->log($file);
         if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
         {
-            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'twitterFeed' => $this->getTwitterFeed()]);
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', $data);
         }
         else
         {
@@ -55,7 +57,7 @@ class SocialFeed_TwitterService extends BaseApplicationComponent
 
             craft()->path->setTemplatesPath($pluginPath);
 
-            $html = craft()->templates->render('frontend/' . $file . '', [ 'twitterFeed' => $this->getTwitterFeed()]);
+            $html = craft()->templates->render('frontend/' . $file . '', $data);
 
             // Reset Template Path
             craft()->path->setTemplatesPath($sitePath);

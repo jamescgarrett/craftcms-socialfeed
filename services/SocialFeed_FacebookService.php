@@ -74,19 +74,21 @@ class SocialFeed_FacebookService extends BaseApplicationComponent
 
     public function displayFacebookFeed()
     {
-        $settings = craft()->socialFeed->getSettings();
+        $settings = craft()->socialFeed->getPublicSettings();
 
         $file = '_facebook';
+        $data = ['facebookFeed' => $this->getFacebookFeed(), 'settings' => $settings];
         
         if ($settings['useJavascript'])
         {
             craft()->socialFeed->getScripts();
             $file = '_js_facebook';
+            $data = [];
         }
 
         if ( IOHelper::fileExists( craft()->path->getTemplatesPath() . 'plugin_socialfeed/' . $file . '.twig') ) 
         {
-            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', [ 'facebookFeed' => $this->getFacebookFeed()]);
+            $html = craft()->templates->render('plugin_socialfeed/' . $file . '', $data);
         }
         else
         {
@@ -95,7 +97,7 @@ class SocialFeed_FacebookService extends BaseApplicationComponent
 
             craft()->path->setTemplatesPath($pluginPath);
 
-            $html = craft()->templates->render('frontend/' . $file . '', [ 'facebookFeed' => $this->getFacebookFeed()]);
+            $html = craft()->templates->render('frontend/' . $file . '', $data);
 
             // Reset Template Path
             craft()->path->setTemplatesPath($sitePath);

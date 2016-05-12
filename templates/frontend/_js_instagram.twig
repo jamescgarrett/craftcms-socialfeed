@@ -2,18 +2,18 @@
 	<div class="socialFeeds-loading"></div>
 </div>
 {% verbatim %}
-	<script type="text/x-handlebars-template" id="socialFeeds-instagram">
-		{{#each feed}}
+	<script type="x-tmpl-mustache" id="socialFeeds-instagram">
+		{{#feed}}
 			<div class="grid-col--xxs12 grid-col--xs6">
 				<div class="socialFeeds-instagram">
-					{{#if name}}
+					{{#caption}}
 						<div class="socialFeeds-instagram-caption">
-							<p>{{{this.caption}}}</p>
+							<p>{{{caption}}}</p>
 						</div>
-					{{/if}}
-					<img src="{{this.image}}" alt="Fatback Bikes" />
+					{{/caption}}
+					<img src="{{image}}" alt="Fatback Bikes" />
 				</div>
 			</div>
-		{{/each}}
+		{{/feed}}
 	</script>
 {% endverbatim %}
